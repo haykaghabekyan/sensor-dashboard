@@ -21,7 +21,7 @@ export const useSensors = () => {
     });
   }, []);
 
-  const ws = useWebsocket('ws://localhost:5001', handleMessage);
+  const ws = useWebsocket(process.env.REACT_APP_WS_URL as string, handleMessage);
 
   const toggleConnection = useCallback((data: SensorMessageType) => {
     ws?.send(JSON.stringify(data));
