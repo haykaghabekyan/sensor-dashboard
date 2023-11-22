@@ -1,16 +1,16 @@
 import { ChangeEvent, FC, useMemo, useState } from 'react';
-import { ISensor } from '../types/sensor';
-import { Command } from '../types/command';
-import { SensorMessage } from '../types/sensor-message';
+import { SensorType } from '../types/sensor';
+import { CommandType } from '../types/command';
+import { SensorMessageType } from '../types/sensor-message';
 
 interface ISensorProps {
-  sensor: ISensor;
-  onToggleConnection: (data: SensorMessage) => void;
+  sensor: SensorType;
+  onToggleConnection: (data: SensorMessageType) => void;
 }
 
 const Sensor: FC<ISensorProps> = ({ sensor, onToggleConnection }) => {
   const handleToggleConnection = (e: ChangeEvent<HTMLInputElement>) => {
-    const command: Command = e.target.checked ? 'connect' : 'disconnect';
+    const command: CommandType = e.target.checked ? 'connect' : 'disconnect';
 
     onToggleConnection({
       id: sensor.id,
@@ -21,16 +21,16 @@ const Sensor: FC<ISensorProps> = ({ sensor, onToggleConnection }) => {
   return (
     <li>
       <label>
-        Toggle connection <input type="checkbox" onChange={handleToggleConnection} />
+        <input type="checkbox" checked={sensor.connected} onChange={handleToggleConnection} />
       </label>
-      {sensor.id} : {sensor.name}
+      {sensor.name} {sensor.connected ? `- ${sensor.value} ${sensor.unit}` : ''}
     </li>
   );
 };
 
 interface ISensorsProps {
-  sensors: ISensor[];
-  onToggleConnection: (data: SensorMessage) => void;
+  sensors: SensorType[];
+  onToggleConnection: (data: SensorMessageType) => void;
 }
 
 export const Sensors: FC<ISensorsProps> = ({ sensors, onToggleConnection }) => {
@@ -41,7 +41,7 @@ export const Sensors: FC<ISensorsProps> = ({ sensors, onToggleConnection }) => {
   };
 
   const sensorsToDisplay = useMemo(() => {
-    return sensors.filter(sensor => sensor.connected === displayConnected);
+    return sensors.filter(sensor => sensor.connected === displayConnected || sensor.connected);
   }, [sensors, displayConnected]);
 
   return (

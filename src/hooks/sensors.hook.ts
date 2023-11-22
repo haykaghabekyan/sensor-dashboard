@@ -1,34 +1,30 @@
-import { useEffect, useState } from 'react';
-import { ISensor } from '../types/sensor';
+import { useCallback, useState } from 'react';
+import { SensorType } from '../types/sensor';
 import { useWebsocket } from './websocket.hook';
-import { SensorMessage } from '../types/sensor-message';
+import { SensorMessageType } from '../types/sensor-message';
 
 export const useSensors = () => {
-  console.log('useSensors');
-  const [sensors, setSensors] = useState<ISensor[] | []>([]);
+  const [sensors, setSensors] = useState<SensorType[]>([]);
 
-  const ws = useWebsocket('ws://localhost:5001');
+  const handleMessage = useCallback((updatedSensor: SensorType) => {
+    setSensors(prevState => {
+      const newSensors: SensorType[] = [...prevState];
 
-  const toggleConnection = (data: SensorMessage) => {
-    ws?.send(JSON.stringify(data))
-  };
+      const index = prevState.findIndex(s => updatedSensor.id === s.id);
 
-  useEffect(() => {
-    const handleMessage = (event: MessageEvent) => {
-      console.log('Message from server:', event.data);
+      if (index === -1) {
+        return [...newSensors, updatedSensor];
+      } else {
+        newSensors[index] = updatedSensor;
+        return newSensors;
+      }
+    });
+  }, []);
 
-      setSensors(prevState => {
-        return [...prevState, event.data];
-      })
-    };
+  const ws = useWebsocket('ws://localhost:5001', handleMessage);
 
-    // Add event listener for messages
-    ws?.addEventListener('message', handleMessage);
-
-    return () => {
-      // Remove event listener for messages
-      ws?.removeEventListener('message', handleMessage);
-    };
+  const toggleConnection = useCallback((data: SensorMessageType) => {
+    ws?.send(JSON.stringify(data));
   }, [ws]);
 
   return {

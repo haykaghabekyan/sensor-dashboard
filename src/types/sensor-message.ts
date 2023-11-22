@@ -1,6 +1,6 @@
-import { Command } from './command';
+import { CommandType } from './command';
 
-export type SensorMessage = {
+export type SensorMessageType = {
   id: string;
-  command: Command;
+  command: CommandType;
 };

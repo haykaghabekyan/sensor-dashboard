@@ -1,1 +1,1 @@
-export type Command = 'connect' | 'disconnect';
+export type CommandType = 'connect' | 'disconnect';

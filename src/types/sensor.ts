@@ -1,4 +1,4 @@
-export type ISensor = {
+export type SensorType = {
   id: string;
   name: string;
   connected: boolean;
