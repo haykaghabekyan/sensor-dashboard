@@ -1,0 +1,37 @@
+.sensor-item {
+    width: 50%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+@media screen and (min-width: 900px) {
+    .sensor-item {
+        width: 33.33%;
+    }
+}
+
+.sensor-item__container {
+    background: rgba(0, 0, 0, 0.01);
+    padding: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-right: 2px solid red;
+}
+
+.sensor-item__header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.sensor-item__container--connected {
+    border-right: 2px solid green;
+}
+
+.sensor-item__content {
+    text-align: center;
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.sensor-item__content span {
+    font-size: 32px;
+}

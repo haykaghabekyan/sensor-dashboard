@@ -1,8 +1,13 @@
-import { Sensors } from './components/sensors';
-import { useSensors } from './hooks/sensors.hook';
+import { Header } from './components/header';
+import { SensorsList } from './components/sensors-list';
+
+import './app.css';
 
 export const App = () => {
-  const { sensors, toggleConnection } = useSensors();
-
-  return <Sensors sensors={sensors} onToggleConnection={toggleConnection} />;
+  return (
+    <>
+      <Header />
+      <SensorsList />
+    </>
+  );
 };

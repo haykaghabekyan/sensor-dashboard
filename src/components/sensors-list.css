@@ -1,0 +1,22 @@
+.sensors-dashboard {
+    max-width: 1270px;
+    margin: auto;
+    padding: 16px;
+}
+
+.sensors-dashboard__toggle {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.sensors-dashboard__filter {
+    margin: 0 8px;
+}
+
+.sensors-list {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0 -8px;
+}
